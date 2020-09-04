@@ -8,12 +8,15 @@ use App\Mail\PasswordEmail;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
+use Exception;
 
 class MailController extends Controller
 {
     public function send(Request $request)
     {
-        Mail::to($request->input('email'))->send(new DemoEmail($request->input('email')));
+        try{
+            Mail::to($request['email'])->send(new DemoEmail($request['email']));
 
         function getRandomString($length = 8) {
             $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -26,14 +29,24 @@ class MailController extends Controller
             return $string;
         }
         $password = getRandomString();
-        Mail::to($request->input('email'))->send(new PasswordEmail($password,$request->input('email')));
+        Mail::to($request['email'])->send(new PasswordEmail($password,$request['email']));
 
-        $user = new User;
-        $user->email = $request->input('email');
-        $user->password = Hash::make($password);
-        $user->role = 'Client';
-        $user->save();
+        try{
+            $user = new User;
+            $user->email = $request->input('email');
+            $user->password = Hash::make($password);
+            $user->role = 'Client';
+            $user->save();
+        }catch(Throwable | Exception $e){
+            return redirect()->back()->with('Alert',$e);
+        }
 
         return redirect()->back()->with('success','An email has been sent to you.');
+        
+        }catch(Exception $e){
+            return redirect()->back()->with('Alert',$e);
+            
+        }
     }
+        
 }

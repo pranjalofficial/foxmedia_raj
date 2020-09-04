@@ -69,12 +69,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
+                <div>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
@@ -88,6 +83,23 @@
                                 </li>
                             @endif
                         @else
+
+                        <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link" data-toggle="dropdown" >
+                            <span class="nav-link-inner-text">Menu</span>
+                            <span class="fas fa-angle-down nav-link-arrow ml-2"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{url('/dashboard/clients/'.Auth::user()->id)}}">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{url('/campaigns/clients/'.Auth::user()->id)}}">Manage Campaigns</a></li>
+                            <li><a class="dropdown-item" href="{{url('/reports/clients/'.Auth::user()->id)}}">Reports</a></li>
+                            <li><a class="dropdown-item" href="{{url('/strategies/clients/'.Auth::user()->id)}}">Manage Strategies</a></li>
+                            <li><a class="dropdown-item" href="{{url('/account/clients/'.Auth::user()->id)}}">Account Details</a></li>
+                            <li><a class="dropdown-item" href="{{url('/profile/clients/'.Auth::user()->id)}}">Edit Profile</a></li>
+                        </ul>
+                    </li>
+</ul>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     Hi, {{ Auth::user()->name }} <span class="caret"></span>

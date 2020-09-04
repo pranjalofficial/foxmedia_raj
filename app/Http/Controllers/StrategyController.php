@@ -9,7 +9,11 @@ use App\Strategy;
 class StrategyController extends Controller
 {
     public function new($email){
-        return view('strategy.new')->with('user_email',$email);
+        try{
+            return view('strategy.new')->with('user_email',$email);
+        }catch(Throwable $e){
+            return('error');
+        }
     }
 
     public function new_inside(){
